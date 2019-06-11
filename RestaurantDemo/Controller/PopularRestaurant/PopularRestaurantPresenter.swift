@@ -11,6 +11,7 @@ class PopularRestaurantPresenter {
     
     var isApiInRuning: Bool = false
     var isApiFailer: Bool = false
+    var isTokenExpire:Bool = false
     var nextPageToken: String = ""
     var category: String = ""
     
@@ -22,14 +23,20 @@ class PopularRestaurantPresenter {
     func getRestaurantListFromServerwithkey(location: String, radius: String,type:String,key:String) {
         self.clearAllDetails(category: type)
         
-        if isApiFailer || isApiInRuning { return }
+        if isApiFailer || isApiInRuning {
+            return
+        }
         if nextPageToken.isEmpty && restaurantArray.count != 0 { return }
         
         self.delegate?.showLoader()
         isApiInRuning = true
         
-        repository.searchRestaurant(location: location, radius: radius, type: type, key: key, completion:{ [weak self] (success, result) in
-            if success, let restaurantData = result as? ([RestaurantListModel], String) {
+        repository.searchRestaurant(location: location, radius: radius, type: type, key: key, completion:{ [weak self] (success, result, errorMessage) in
+            if let error = errorMessage {
+                self?.delegate?.showError(withMessage: error)
+                self?.isTokenExpire = true
+            }
+            else if success, let restaurantData = result as? ([RestaurantListModel], String) {
                 self?.restaurantArray.append(contentsOf: restaurantData.0)
                 self?.delegate?.restaurantResultPostedSuccessfully()
                 self?.nextPageToken = restaurantData.1
@@ -47,14 +54,18 @@ class PopularRestaurantPresenter {
     func getRestaurantListFromServer(location: String, radius: String,type:String) {
         self.clearAllDetails(category: type)
         
-        if isApiFailer || isApiInRuning { return }
+        if isTokenExpire || isApiInRuning { return }
         if nextPageToken.isEmpty && restaurantArray.count != 0 { return }
         
         self.delegate?.showLoader()
         isApiInRuning = true
         
-        repository.searchRestaurant(location: location, radius: radius, type: type, token: self.nextPageToken, completion:{ [weak self] (success, result) in
-            if success, let restaurantData = result as? ([RestaurantListModel], String) {
+        repository.searchRestaurant(location: location, radius: radius, type: type, token: self.nextPageToken, completion:{ [weak self] (success, result, errorMessage) in
+            if let error = errorMessage {
+                self?.delegate?.showError(withMessage: error)
+                self?.isTokenExpire = true
+            }
+            else if success, let restaurantData = result as? ([RestaurantListModel], String) {
                 self?.restaurantArray.append(contentsOf: restaurantData.0)
                 self?.delegate?.restaurantResultPostedSuccessfully()
                 self?.nextPageToken = restaurantData.1
@@ -62,7 +73,7 @@ class PopularRestaurantPresenter {
                 if let errorString = result as? String {
                     self?.delegate?.showError(withMessage: errorString)
                 }
-                self?.isApiFailer = true
+                self?.isTokenExpire = true
             }
             self?.delegate?.hideLoader()
             self?.isApiInRuning = false

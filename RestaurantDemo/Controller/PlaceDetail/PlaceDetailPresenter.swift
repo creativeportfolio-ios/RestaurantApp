@@ -14,8 +14,11 @@ class PlaceDetailPresenter {
     
     func getPlacedetail(placeId: String){
         self.delegate?.showLoader()
-        repository.searchPlacedetail(placeid: placeId, completion:{ [weak self] (success, result) in
-            if success, let restaurantData = result as? PlaceDetailModel {
+        repository.searchPlacedetail(placeid: placeId, completion:{ [weak self] (success, result, errorMessage) in
+            if let error = errorMessage {
+                self?.delegate?.showError(withMessage: error)
+            }
+            else if success, let restaurantData = result as? PlaceDetailModel {
                 self?.placeDataArray = restaurantData
                 self?.delegate?.placePostedSuccessfully()
             } else {

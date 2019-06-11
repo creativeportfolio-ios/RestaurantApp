@@ -12,4 +12,5 @@ class Constant {
     }
     
     static let kGoogleDirectionAPI = "AIzaSyBn9JDmqFJIM3QbVs3GOzm3R9SQ9C_6aiU"
+    static let alertTitle = "Restaurant App"
 }

@@ -245,7 +245,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rdA-cs-stZ">
                                 <rect key="frame" x="0.0" y="20" width="375" height="45"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="              search for place or address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h6W-zQ-8Cd">
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search for place or address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h6W-zQ-8Cd">
                                         <rect key="frame" x="8" y="7.5" width="284" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="n8E-IR-82D"/>

@@ -14,6 +14,7 @@ class RestaurantListModel {
     var lat: Double?
     var long: Double?
     var userRatingsTotal: Float?
+    var errorMessage: String?
 
     init(jsonData: [String:Any]) {
         
@@ -66,6 +67,10 @@ class RestaurantListModel {
         }
         if let placeId = jsonData["place_id"] as? String {
             self.placeId = placeId
+        }
+        
+        if let errorMessage = jsonData["error_message"] as? String {
+            self.errorMessage = errorMessage
         }
     }
 }

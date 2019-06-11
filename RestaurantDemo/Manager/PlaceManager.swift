@@ -1,7 +1,7 @@
 
 import Foundation
 
-typealias CompletionBlockPlaceManager = (_ success: Bool, _ response: Any?) -> Void
+typealias CompletionBlockPlaceManager = (_ success: Bool, _ response: Any?, _ errorMessage: String?) -> Void
 
 class PlaceManager {
     
@@ -11,15 +11,21 @@ class PlaceManager {
         NetworkManager.makeRequest(route) { (result) in
             switch result {
             case .success(let value):
-                
                 var placeDetailModel: PlaceDetailModel?
+                var errorMessage = ""
+                
                 if let jsonResult = value as? [String : Any], let objects = jsonResult["result"] as? [String: Any] {
                     placeDetailModel = PlaceDetailModel(jsonData: objects)
                 }
-                completion(true, placeDetailModel)
+                
+                if let jsonResult = value as? [String : Any], let error = jsonResult["error_message"] as? String {
+                    errorMessage = error
+                }
+
+                completion(true, placeDetailModel, errorMessage)
                 
             case .failure(let error):
-                completion(false, error)
+                completion(false, error, error.description)
             }
         }
     }

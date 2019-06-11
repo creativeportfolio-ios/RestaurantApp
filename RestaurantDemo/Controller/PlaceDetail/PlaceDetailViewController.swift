@@ -54,7 +54,7 @@ extension PlaceDetailViewController :PlaceDetailDelegate {
     }
     
     func showError(withMessage messge: String) {
-        Constant.showAlert(title: "", message: messge, viewController: self)
+        Constant.showAlert(title: Constant.alertTitle, message: messge, viewController: self)
     }
     
     func placePostedSuccessfully() {

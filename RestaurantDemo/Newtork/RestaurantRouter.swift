@@ -23,10 +23,13 @@ public enum RestaurantRouter: URLRequestConvertible {
                 return "location=\(location)&radius=\(radius)&type=\(type)&key=\(Constant.kGoogleDirectionAPI)"
             }
             else {
-               return "location=\(location)&radius=\(radius)&type=\(type)&key=\(Constant.kGoogleDirectionAPI)&pagetoken=\(token)"
+                return "location=\(location)&radius=\(radius)&type=\(type)&key=\(Constant.kGoogleDirectionAPI)&pagetoken=\(token)"
             }
         case .searchRestaurantwithkey(let location, let radius, let type, let key):
-            return "location=\(location)&radius=\(radius)&type=\(type)&key=\(Constant.kGoogleDirectionAPI)&keyword=\(key)"
+            if let urlKey = key.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
+                return "location=\(location)&radius=\(radius)&type=\(type)&key=\(Constant.kGoogleDirectionAPI)&keyword=\(urlKey)"
+            }
+            return "location=\(location)&radius=\(radius)&type=\(type)&key=\(Constant.kGoogleDirectionAPI)"
         case .searchPlaces(let placeid):
             return "placeid=\(placeid)&key=\(Constant.kGoogleDirectionAPI)"
         }

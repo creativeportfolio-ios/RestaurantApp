@@ -24,7 +24,11 @@ class RestaurantListPresenter {
         
         self.delegate?.showLoader()
         isApiInRuning = true
-        repository.searchRestaurant(location: location, radius: radius, type: type, token: nextPageToken, completion:{ [weak self] (success, result) in
+        repository.searchRestaurant(location: location, radius: radius, type: type, token: nextPageToken, completion:{ [weak self] (success, result, errorMessage) in
+            if let error = errorMessage {
+                self?.delegate?.showError(withMessage: error)
+                self?.isApiFailer = true
+            }
             
             if success, let restaurantData = result as? ([RestaurantListModel], String) {
                 self?.restaurantArray.append(contentsOf: restaurantData.0)
