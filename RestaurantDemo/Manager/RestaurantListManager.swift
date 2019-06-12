@@ -13,7 +13,7 @@ class RestaurantListManager {
             case .success(let value):
                 var restaurantModels: [RestaurantListModel] = []
                 var nextPageToken: String = ""
-                var errorMessage = ""
+                var errorMessage: String? = nil
                 
                 if let jsonResult = value as? [String : Any] {
                     if let objects = jsonResult["results"] as? [[String: Any]] {
@@ -44,7 +44,7 @@ class RestaurantListManager {
             case .success(let value):
                 var restaurantModels: [RestaurantListModel] = []
                 var nextPageToken: String = ""
-                var errorMessage = ""
+                var errorMessage: String? = nil
 
                 if let jsonResult = value as? [String : Any] {
                     if let objects = jsonResult["results"] as? [[String: Any]] {

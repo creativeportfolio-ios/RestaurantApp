@@ -22,6 +22,7 @@ class PopularRestaurantPresenter {
     
     func getRestaurantListFromServerwithkey(location: String, radius: String,type:String,key:String) {
         self.clearAllDetails(category: type)
+        if !key.isEmpty { self.clearAllDetails(category: "")}
         
         if isApiFailer || isApiInRuning {
             return
@@ -81,13 +82,15 @@ class PopularRestaurantPresenter {
     }
     
     private func clearAllDetails(category: String) {
-        if self.category != category {
+        if self.category != category || category.isEmpty {
             isApiInRuning = false
             isApiFailer = false
             nextPageToken = ""
             restaurantArray.removeAll()
         }
-        self.category = category
+        if !category.isEmpty {
+            self.category = category
+        }
     }
 }
 

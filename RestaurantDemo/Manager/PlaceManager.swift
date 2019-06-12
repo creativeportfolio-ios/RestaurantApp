@@ -12,7 +12,7 @@ class PlaceManager {
             switch result {
             case .success(let value):
                 var placeDetailModel: PlaceDetailModel?
-                var errorMessage = ""
+                var errorMessage: String? = nil
                 
                 if let jsonResult = value as? [String : Any], let objects = jsonResult["result"] as? [String: Any] {
                     placeDetailModel = PlaceDetailModel(jsonData: objects)

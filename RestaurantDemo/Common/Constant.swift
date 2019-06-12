@@ -11,6 +11,6 @@ class Constant {
         viewController.present(alertController, animated: true, completion: nil)
     }
     
-    static let kGoogleDirectionAPI = "AIzaSyBn9JDmqFJIM3QbVs3GOzm3R9SQ9C_6aiU"
+    static let kGoogleDirectionAPI = "AIzaSyCmCp-TFr8GLGn1GNQeYCJok63lzba2Gl8"
     static let alertTitle = "Restaurant App"
 }
